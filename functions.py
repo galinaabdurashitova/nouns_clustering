@@ -4,6 +4,14 @@ import os
 import translations.YandexAPI as Dictionary
 
 
+# Проверяет, имеют ли массивы общие элементы
+def check_arrays_for_commons(m1, m2):
+    for element in m1:
+        if element in m2:
+            return element
+    return False
+
+
 # Делает словарь
 def make_dict(lang, languages, bigrams):
     dictionaries = {}

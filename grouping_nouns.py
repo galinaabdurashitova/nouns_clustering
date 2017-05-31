@@ -5,7 +5,13 @@ import sys
 from functions import write_file
 
 
-def classification_way(lang, name, path=''):
+def classification_way_one_file(path=''):
+    noun_lines = opening('all', 'languages', path)
+    noun_lines = make_categories(noun_lines, os.listdir(path + 'result\\3_ready\\'), 0)
+    write_file('all', 'bigrams', noun_lines, '5_classified', path, 'csv')
+
+
+def classification_way_separate_files(lang, name, path=''):
     noun_lines = opening(lang, name, path)
     noun_lines = make_categories(noun_lines, os.listdir(path + 'result\\4_translated\\'), 0)
     write_file(lang, name, noun_lines, '5_classified', path, 'csv')
@@ -27,7 +33,8 @@ def make_categories(noun_lines, filenames, i=0):
     mas2 = []
     n = filenames[i]
     for element in noun_lines:
-        if n[4:-4] in element:
+        adjectives = element.split(';')
+        if n[4:-4] in adjectives[1:]:
             mas1.append(element)
         else:
             mas2.append(element)
@@ -45,9 +52,10 @@ if __name__ == '__main__':
     if len(sys.argv) > 3:
         path_name = sys.argv[3] + '\\'
     else:
-        path_name = ''
+        path_name = os.getcwd()
+        path_name = path_name[0:path_name.rfind('\\')] + '\\'
 
+    # classification_way_one_file(path_name)
     nouns = opening(language, word, path_name)
-    # Алгоритм, группирующий существительные по прилагательным, с которыми они сочетаются
     nouns = make_categories(nouns, os.listdir(path_name + 'result\\4_translated\\'), 0)
     write_file(language, word, nouns, '5_classified', path_name, 'csv')

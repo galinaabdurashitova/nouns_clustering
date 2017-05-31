@@ -4,8 +4,8 @@ import os
 from bigrams_preprocess import bigrams_preprocess
 from morph_analyze import morph_analyze
 from syntax_connection import syntax_check
-from translate_bigrams import translate_bigrams
-from grouping_nouns import classification_way
+from one_file import make_one_file
+from grouping_nouns import classification_way_one_file as classification_way
 
 
 def get_adjectives(path=''):
@@ -48,18 +48,10 @@ if __name__ == '__main__':
         syntax_check(LANG, NAME, RUSSIAN, path)
         print(datetime.datetime.now())
 
-    for wordline in NAMES:
-        NAME = wordline[0]
-        LANG = wordline[1]
-        RUSSIAN = wordline[2]
+    print('4. Перевод')
+    make_one_file(path)
+    print(datetime.datetime.now())
 
-        print(NAME)
-        print(datetime.datetime.now())
-
-        print('4. Перевод')
-        translate_bigrams(LANG, NAME, path)
-        print(datetime.datetime.now())
-
-        print('5. Алгоритмы классификации')
-        classification_way(LANG, NAME, path)
-        print(datetime.datetime.now())
+    print('5. Алгоритмы классификации')
+    classification_way(path)
+    print(datetime.datetime.now())
